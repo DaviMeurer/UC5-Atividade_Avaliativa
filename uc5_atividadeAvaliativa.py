@@ -15,14 +15,19 @@ def consulta_noticias():
             conteudo = BeautifulSoup(response.content, "html.parser")
 
             noticias = conteudo.find_all("h3", class_ = "entry-title td-module-title")
-            data = conteudo.find_all("time", class_ = "entry-date updated td-module-date")
+            datas = conteudo.find_all("time", class_ = "entry-date updated td-module-date")
+
             i = 0
+            lista_noticia = []
+            lista_data = []
             for manchete in noticias:
                 titulo = manchete.get_text()
-                print(f"{i+1} {titulo}\n"
-                    f"{data[i].get_text()}\n")
-                i+=1
+                lista_noticia.append(titulo)
 
+            for data in datas:
+                lista_data.append(data[i].get_text())
+                i+=1
+            print (lista_noticia, lista_data)
     except requests.exceptions.RequestException as e:
         print ("Erro:", e)
     except Exception as e:
@@ -42,7 +47,7 @@ def envia_BD():
 
         cursor = mysql.connector.cursor()
         SQL = "INSERT into NOTICIAS VALUES (%s, %s)"
-        cursor.execute(SQL, (noticias, data))
+        cursor.execute(SQL, (li, data))
         print(f"Salvo")
 
     except mysql.connector.Error as e:
@@ -51,4 +56,4 @@ def envia_BD():
             conexao.close()
             cursor.close()
 
-envia_BD()
+consulta_noticias()
