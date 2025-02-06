@@ -6,26 +6,27 @@ import datetime
 
 url = "https://www.pontaporainforma.com.br/"
 
-try:
-    response = requests.get(url)
-    response.raise_for_status()
+def consulta_noticias():
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
 
-    if response.status_code == 200:
-        conteudo = BeautifulSoup(response.content, "html.parser")
+        if response.status_code == 200:
+            conteudo = BeautifulSoup(response.content, "html.parser")
 
-        noticias = conteudo.find_all("h3", class_ = "entry-title td-module-title")
-        data = conteudo.find_all("time", class_ = "entry-date updated td-module-date")
-        i = 0
-        for manchete in noticias:
-            titulo = manchete.get_text()
-            print(f"{i+1} {titulo}\n"
-                f"{data[i].get_text()}\n")
-            i+=1
+            noticias = conteudo.find_all("h3", class_ = "entry-title td-module-title")
+            data = conteudo.find_all("time", class_ = "entry-date updated td-module-date")
+            i = 0
+            for manchete in noticias:
+                titulo = manchete.get_text()
+                print(f"{i+1} {titulo}\n"
+                    f"{data[i].get_text()}\n")
+                i+=1
 
-except requests.exceptions.RequestException as e:
-    print ("Erro:", e)
-except Exception as e:
-    print ("Erro: ", e)
+    except requests.exceptions.RequestException as e:
+        print ("Erro:", e)
+    except Exception as e:
+        print ("Erro: ", e)
 
 def envia_BD():
     conexao = None
@@ -49,4 +50,5 @@ def envia_BD():
     finally:
             conexao.close()
             cursor.close()
-        
+
+envia_BD()
