@@ -1,0 +1,7 @@
+CREATE TABLE NOTICIAS(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo TEXT,
+    data_extracao DATETIME
+);
+
+SELECT * from NOTICIAS
