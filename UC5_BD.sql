@@ -1,7 +1,8 @@
 CREATE TABLE NOTICIAS(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     titulo TEXT,
-    data_extracao DATETIME
+    data_extracao DATE
 );
+use uc5;
 
 SELECT * from NOTICIAS
